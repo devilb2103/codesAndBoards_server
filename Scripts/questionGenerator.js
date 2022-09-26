@@ -3,9 +3,8 @@ const q2 = require("../Data/Category2_Questions.json");
 const q3 = require("../Data/Category3_Questions.json");
 
 let sources = [q1, q2, q3]
-let totalQuestions = 11
 
-function generateQuestions() {
+function generateQuestions(totalQuestions) {
     const rem = totalQuestions % (sources.length)
     questionCountPerCategory = (totalQuestions - rem) / (sources.length)
     let questionSet = {}
@@ -52,5 +51,6 @@ function getRand(n) {
     return Math.floor(Math.random() * n)
 }
 module.exports = {
-    generateQuestions: generateQuestions
+    generateQuestions: generateQuestions,
+    getRand: getRand
 }
