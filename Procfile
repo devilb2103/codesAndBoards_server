@@ -1,1 +1,1 @@
-worker: node Scripts/app.js
+web: node Scripts/app.js
