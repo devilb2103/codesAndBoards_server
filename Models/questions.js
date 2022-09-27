@@ -2,32 +2,32 @@ const { Model, DataTypes, Sequelize } = require("sequelize")
 const { sequelize } = require("../Database/setup")
 
 const questions = sequelize.define('questions', {
-    "id": {
+    id: {
         primaryKey: true,
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    "description": {
+    description: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    "option_a": {
+    option_a: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    "option_b": {
+    option_b: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    "option_c": {
+    option_c: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    "option_d": {
+    option_d: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    "isCorrect": {
+    isCorrect: {
         type: DataTypes.STRING(1),
         allowNull: false
     },

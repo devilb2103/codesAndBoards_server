@@ -3,6 +3,9 @@ const { connectDB, initializeTables, addMember, selectMember, removeMember } = r
 const { sequelize } = require('../Database/setup')
 const { generateQuestions } = require('../Utils/questionGenerator')
 const { generateTeam, teams } = require('../Utils/teamGenerator')
+var cors = require('cors')
+//cors.
+
 const app = express()
 app.use(express.json())
 
@@ -10,10 +13,10 @@ const port = process.env.PORT || 6969
 
 connectDB()
 initializeTables()
-addMember(1)
+//addMember(1)
 selectMember()
-addMember(2)
-removeMember(1)
+//addMember(2)
+removeMember(2)
 selectMember()
 
 app.get("/", (req, res) => {
@@ -29,6 +32,14 @@ app.post("/teams/new", (req, res) => {
     // const generatedTeam = generateTeam(names)
     // teams.push(generatedTeam)
     // res.send(generatedTeam)
+})
+
+app.patch("", (req, res) => {
+    //
+})
+
+app.delete("", (req, res) => {
+    //
 })
 
 app.listen(port, () => console.log(`port ${port}`))
