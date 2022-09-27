@@ -1,45 +1,51 @@
-const express = require('express')
-const { connectDB, initializeTables, addMember, selectMember, removeMember } = require('../Database/databaseFunctions')
-const { sequelize } = require('../Database/setup')
-const { generateQuestions } = require('../Utils/questionGenerator')
-const { generateTeam, teams } = require('../Utils/teamGenerator')
-var cors = require('cors')
-//cors.
+const express = require("express");
+const cors = require("cors");
+const passport = require("passport");
+const createError = require("http-errors");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+const { sequelize } = require("../Database/setup");
 
-const app = express()
-app.use(express.json())
+dotenv.config();
 
-const port = process.env.PORT || 6969
+const app = express();
 
-connectDB()
-initializeTables()
-//addMember(1)
-selectMember()
-//addMember(2)
-removeMember(2)
-selectMember()
+app.use(passport.initialize());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Server is up")
-})
+const port = process.env.PORT || 3000;
 
-app.get("/teams", (req, res) => {
-    res.send(teams)
-})
+// app.listen(port, () => console.log(`port ${port}`));
 
-app.post("/teams/new", (req, res) => {
-    // const names = Object.values(req.body) //refer to structure in Data/TeamDataFormat.json file
-    // const generatedTeam = generateTeam(names)
-    // teams.push(generatedTeam)
-    // res.send(generatedTeam)
-})
+app.get("*", (req, res) => {
+  res.status(404).send({ status: false, message: "No Found" });
+});
 
-app.patch("", (req, res) => {
-    //
-})
+app.post("*", (req, res) => {
+  res.status(404).send({ status: false, message: "No Found" });
+});
 
-app.delete("", (req, res) => {
-    //
-})
+app.use(async (req, res, next) => {
+  next(createError(404, "Not Found"));
+});
 
-app.listen(port, () => console.log(`port ${port}`))
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send({
+    status: false,
+    enviroment: process.env.MODE,
+    message:
+      err.status === 403
+        ? err.message
+        : process.env.MODE === "development"
+        ? err.message
+        : "Error Occoured",
+  });
+});
+
+sequelize.sync().then(() => {
+  app.listen(port, () => console.log(`port ${port}`));
+});
