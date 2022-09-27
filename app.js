@@ -4,7 +4,8 @@ const passport = require("passport");
 const createError = require("http-errors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
-const { sequelize } = require("../Database/setup");
+// const { sequelize } = require("./Database/setup");
+const { sequelize } = require("./Database/setup");
 
 dotenv.config();
 
