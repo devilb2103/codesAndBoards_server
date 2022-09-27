@@ -2,7 +2,7 @@
   "name": "codesandboards_server",
   "version": "1.0.0",
   "description": "",
-  "main": "Scripts/app.js",
+  "main": "App/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.23.1"
   }
 }
