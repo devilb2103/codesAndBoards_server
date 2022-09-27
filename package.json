@@ -5,6 +5,7 @@
   "main": "App/app.js",
   "scripts": {
     "startDev": "nodemon App/app.js",
+    "start": "node App/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
