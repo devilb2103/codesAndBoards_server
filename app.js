@@ -4,14 +4,16 @@ const passport = require('passport');
 const createError = require('http-errors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-// const { sequelize } = require("./Database/setup");
 const { sequelize } = require('./Database/setup');
-const { generateQuestions } = require('./Utils/questionGenerator');
 const {
   select_members,
   select_questions,
   select_api_keys,
   select_quizzes,
+  select_members_by_ID,
+  select_members_by_teamID,
+  select_quizzes_by_teamID,
+  select_api_keys_by_teamID,
 } = require('./Database/selectFunctions');
 const {
   create_Members,
@@ -22,6 +24,7 @@ const {
   delete_All,
   resetDB,
 } = require('./Database/deleteFunctions');
+const { update_answers } = require('./Database/patchFunctions');
 
 dotenv.config();
 
@@ -43,13 +46,33 @@ app.get('/select/members', async (req, res) => {
   res.send(data);
 });
 
+app.get('/select/members/ID/:id', async (req, res) => {
+  let data = await select_members_by_ID(req.params.id);
+  res.send(data);
+});
+
+app.get('/select/members/teamID/:id', async (req, res) => {
+  let data = await select_members_by_teamID(req.params.id);
+  res.send(data);
+});
+
 app.get('/select/quizzes', async (req, res) => {
   let data = await select_quizzes();
   res.send(data);
 });
 
+app.get('/select/quizzes/teamID/:id', async (req, res) => {
+  let data = await select_quizzes_by_teamID(req.params.id);
+  res.send(data);
+});
+
 app.get('/select/api_Keys', async (req, res) => {
   let data = await select_api_keys();
+  res.send(data);
+});
+
+app.get('/select/api_Keys/teamID/:id', async (req, res) => {
+  let data = await select_api_keys_by_teamID(req.params.id);
   res.send(data);
 });
 
@@ -74,6 +97,16 @@ app.post('/create/team', async (req, res) => {
 app.get('/reset', async (req, res) => {
   await delete_All();
   res.send('all tables have been reset');
+});
+
+/**
+ * other routes
+ */
+app.patch('/submitQuiz', async (req, res) => {
+  const teamID = req.body.teamID;
+  const answerList = req.body.answerKey;
+  const response = await update_answers(teamID, answerList);
+  res.send(response);
 });
 
 // app.use((err, req, res, next) => {
