@@ -1,18 +1,16 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../Database/setup");
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../Database/setup');
 
-const api_key = sequelize.define("api_Key", {
+const api_key = sequelize.define('api_Key', {
   id: {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
   key: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   team_id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
   },
 });
 

@@ -1,11 +1,20 @@
-const express = require("express");
-const cors = require("cors");
-const passport = require("passport");
-const createError = require("http-errors");
-const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
+const express = require('express');
+const cors = require('cors');
+const passport = require('passport');
+const createError = require('http-errors');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 // const { sequelize } = require("./Database/setup");
-const { sequelize } = require("./Database/setup");
+const { sequelize } = require('./Database/setup');
+const {
+  showMemberTable,
+  removeAllFromTable,
+  AddQuestions,
+  showQuizTable,
+  showQuestionTable,
+  resetDB,
+} = require('./Database/databaseFunctions');
+const { member } = require('./Models/member');
 
 dotenv.config();
 
@@ -19,18 +28,29 @@ app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
-// app.listen(port, () => console.log(`port ${port}`));
-
-app.get("*", (req, res) => {
-  res.status(404).send({ status: false, message: "No Found" });
+app.post('/generateQuestions', async (req, res) => {
+  let data = await AddQuestions(req.body.count);
+  res.send(data);
 });
 
-app.post("*", (req, res) => {
-  res.status(404).send({ status: false, message: "No Found" });
+app.get('/questions', async (req, res) => {
+  let data = await showQuestionTable();
+  res.send(data);
 });
 
-app.use(async (req, res, next) => {
-  next(createError(404, "Not Found"));
+app.get('/members', async (req, res) => {
+  let data = await showMemberTable();
+  res.send(data);
+});
+
+app.get('/resetValues', async (req, res) => {
+  await removeAllFromTable();
+  res.send('removed everything');
+});
+
+app.get('/reset', async (req, res) => {
+  const x = await resetDB();
+  res.send(x);
 });
 
 app.use((err, req, res, next) => {
@@ -41,9 +61,9 @@ app.use((err, req, res, next) => {
     message:
       err.status === 403
         ? err.message
-        : process.env.MODE === "development"
+        : process.env.MODE === 'development'
         ? err.message
-        : "Error Occoured",
+        : 'Error Occoured',
   });
 });
 

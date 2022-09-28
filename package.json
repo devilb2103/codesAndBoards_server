@@ -2,7 +2,7 @@
   "name": "codesandboards_server",
   "version": "1.0.0",
   "description": "",
-  "main": "App/app.js",
+  "main": "app.js",
   "scripts": {
     "startDev": "nodemon app.js",
     "start": "node app.js",

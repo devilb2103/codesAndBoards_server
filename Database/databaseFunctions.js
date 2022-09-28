@@ -1,53 +1,93 @@
-const { where } = require("sequelize");
-const { api_key } = require("../Models/api_key");
-const { member } = require("../Models/member");
-const { questions } = require("../Models/questions");
-const { quiz } = require("../Models/quiz");
-const { sequelize } = require("./setup");
+const { api_key } = require('../Models/api_key');
+const { member } = require('../Models/member');
+const { question } = require('../Models/question');
+const { quiz } = require('../Models/quiz');
+const { sequelize } = require('./setup');
 
-async function connectDB() {
-  try {
-    await sequelize.authenticate();
-    console.log("connected to db");
-  } catch (err) {
-    console.log("Could not connect to db");
-  }
+/**
+ * database resetter functions
+ */
+async function resetDB() {
+  await sequelize.drop();
+  return 'dropped all tables';
 }
 
-function initializeTables() {
-  api_key.sync();
-  member.sync();
-  questions.sync();
-  quiz.sync();
+async function removeAllFromTable() {
+  await api_key.destroy({ truncate: true });
+  await member.destroy({ truncate: true });
+  await question.destroy({ truncate: true });
+  await quiz.destroy({ truncate: true });
 }
 
-function addMember(id) {
-  const user = member.create({
-    id: id,
-    name: "dev1",
-    team_id: 5,
+/**
+ * select * functions
+ * */
+async function showKeyTable() {
+  let res = await api_key.findAll({
+    attributes: ['id', 'key', 'team_id'],
   });
+  return JSON.stringify(res);
 }
 
-function removeMember(id) {
-  const user = member.destroy({
-    where: {
-      id: id,
-    },
+async function showMemberTable() {
+  let res = await member.findAll({
+    attributes: ['id', 'name', 'team_id'],
   });
+  return JSON.stringify(res);
 }
 
-async function selectMember() {
-  const x = await member.findAll({
-    attributes: ["id", "team_id"],
+async function showQuestionTable() {
+  let res = await question.findAll({
+    attributes: [
+      'id',
+      'description',
+      'option_a',
+      'option_b',
+      'option_c',
+      'option_d',
+      'isCorrect',
+    ],
   });
-  console.log(JSON.stringify(x));
+  return JSON.stringify(res);
+}
+
+async function showQuizTable() {
+  let res = await quiz.findAll({
+    attributes: ['id', 'team_id', 'question'],
+  });
+  return JSON.stringify(res);
+}
+
+/**
+ * sample question generator
+ */
+
+async function AddQuestions(count) {
+  const rowCount = await question.count();
+  // for (let i = 0; i < count; i++) {
+  // let q = await question.create({
+  //     id: i, //rows + i + 1,
+  //     description: 'q', //`question ${rows + i + 1}`,
+  //     option_a: 'option_a',
+  //     option_b: 'option_b',
+  //     option_c: 'option_c',
+  //     option_d: 'option_d',
+  //     isCorrect: 'Boolean',
+  //   });
+  // }
+  // const a = question.create({
+  //   id: 1,
+  // });
+  // console.log(count);
+  // return `${count} questions created`;
 }
 
 module.exports = {
-  connectDB: connectDB,
-  initializeTables: initializeTables,
-  addMember: addMember,
-  selectMember: selectMember,
-  removeMember: removeMember,
+  resetDB: resetDB,
+  removeAllFromTable: removeAllFromTable,
+  showKeyTable: showKeyTable,
+  showMemberTable: showMemberTable,
+  showQuestionTable: showQuestionTable,
+  showQuizTable: showQuizTable,
+  AddQuestions: AddQuestions,
 };
