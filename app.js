@@ -11,6 +11,7 @@ const {
   select_members,
   select_questions,
   select_api_keys,
+  select_quizzes,
 } = require('./Database/selectFunctions');
 const {
   create_Members,
@@ -34,26 +35,45 @@ app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
-app.post('/q', async (req, res) => {
-  const x = await create_Members(req.body.names);
-  // const x = await select_api_keys();
-  // await create_SampleQuestions(10);
-  res.send(x);
+/**
+ * select routes
+ */
+app.get('/select/members', async (req, res) => {
+  let data = await select_members();
+  res.send(data);
 });
 
-app.get('/members', async (req, res) => {
+app.get('/select/quizzes', async (req, res) => {
+  let data = await select_quizzes();
+  res.send(data);
+});
+
+app.get('/select/api_Keys', async (req, res) => {
   let data = await select_api_keys();
   res.send(data);
 });
 
-app.get('/resetMembers', async (req, res) => {
-  await deleteMembers();
-  res.send('deleted all members');
+app.get('/select/questions', async (req, res) => {
+  let data = await select_questions();
+  res.send(data);
 });
+
+/**
+ * create routes
+ */
+
+app.post('/create/team', async (req, res) => {
+  const x = await create_Members(req.body.names);
+  res.send(x);
+});
+
+/**
+ * delte routes
+ */
 
 app.get('/reset', async (req, res) => {
   await delete_All();
-  res.send('all tables reset');
+  res.send('all tables have been reset');
 });
 
 // app.use((err, req, res, next) => {
