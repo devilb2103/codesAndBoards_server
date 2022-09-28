@@ -109,19 +109,19 @@ app.patch('/submitQuiz', async (req, res) => {
   res.send(response);
 });
 
-// app.use((err, req, res, next) => {
-//   res.status(err.status || 500);
-//   res.send({
-//     status: false,
-//     enviroment: process.env.MODE,
-//     message:
-//       err.status === 403
-//         ? err.message
-//         : process.env.MODE === 'development'
-//         ? err.message
-//         : 'Error Occoured',
-//   });
-// });
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send({
+    status: false,
+    enviroment: process.env.MODE,
+    message:
+      err.status === 403
+        ? err.message
+        : process.env.MODE === 'development'
+        ? err.message
+        : 'Error Occoured',
+  });
+});
 
 sequelize.sync().then(() => {
   app.listen(port, () => console.log(`port ${port}`));
