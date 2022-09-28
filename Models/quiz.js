@@ -10,7 +10,7 @@ const quiz = sequelize.define('quiz', {
     type: DataTypes.INTEGER,
   },
   question: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.JSON,
   },
 });
 

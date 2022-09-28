@@ -1,56 +1,30 @@
-const q1 = require("../Data/Category1_Questions.json");
-const q2 = require("../Data/Category2_Questions.json");
-const q3 = require("../Data/Category3_Questions.json");
+const { select_questions } = require('../Database/selectFunctions');
+const { question } = require('../Models/question');
 
-let sources = [q1, q2, q3]
-
-function generateQuestions(totalQuestions) {
-    const rem = totalQuestions % (sources.length)
-    questionCountPerCategory = (totalQuestions - rem) / (sources.length)
-    let questionSet = {}
-
-    // question randomization phase - 1
-    for (let srcIndex = 0; srcIndex < sources.length; srcIndex++) {
-        src = sources[srcIndex] //stores q1, q2, q3 etc
-        for (let i = 0; i < questionCountPerCategory; i++) {
-            generatedQuestion = getRandItem(src, questionSet)
-            key = Object.keys(generatedQuestion)[0]
-            value = Object.values(generatedQuestion)[0]
-            questionSet[key] = value
-        }
+async function generateQuestions(count) {
+  let indexes = [];
+  sourceLimit = await question.count();
+  for (let i = 0; i < count; i++) {
+    const id = getRand(sourceLimit);
+    if (indexes.includes(id)) {
+      i -= 1;
+    } else {
+      indexes.push(id);
     }
-
-    // question randomization phase - 1
-
-    for (let i = 0; i < rem; i++) {
-        src = sources[getRand(sources.length)] //stores q1, q2, q3 etc
-        generatedQuestion = getRandItem(src, questionSet)
-        key = Object.keys(generatedQuestion)[0]
-        value = Object.values(generatedQuestion)[0]
-        questionSet[key] = value
-
-    }
-
-    return (questionSet)
-
-}
-function getRandItem(dict, check) {
-    keys = Object.keys(dict)
-    a = {}
-
-    while (true) {
-        key = keys[getRand(keys.length)]
-        if (!Object.keys(check).includes(key)) {
-            a[key] = dict[key]
-            return a
-        }
-    }
+  }
+  const src = await select_questions();
+  const parsedSrc = JSON.parse(src); //list of obj {}
+  let selectedQuestions = [];
+  for (let i = 0; i < indexes.length; i++) {
+    selectedQuestions.push(parsedSrc[indexes[i]]);
+  }
+  return selectedQuestions;
 }
 
 function getRand(n) {
-    return Math.floor(Math.random() * n)
+  return Math.floor(Math.random() * n);
 }
 module.exports = {
-    generateQuestions: generateQuestions,
-    getRand: getRand
-}
+  generateQuestions: generateQuestions,
+  getRand: getRand,
+};
