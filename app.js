@@ -7,12 +7,12 @@ const dotenv = require('dotenv');
 // const { sequelize } = require("./Database/setup");
 const { sequelize } = require('./Database/setup');
 const {
-  showMemberTable,
-  removeAllFromTable,
-  AddQuestions,
-  showQuizTable,
-  showQuestionTable,
-  resetDB,
+  select_api_keys,
+  select_members,
+  select_questions,
+  select_quizzes,
+  CreateSampleQuestions,
+  deleteAll,
 } = require('./Database/databaseFunctions');
 const { member } = require('./Models/member');
 
