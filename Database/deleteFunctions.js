@@ -24,13 +24,18 @@ async function delete_api_Keys() {
   return 'deleted all api keys';
 }
 
-async function delete_api_Keys_by_teamID(teamID) {
-  await api_key.destroy({
-    where: {
-      team_id: teamID,
-    },
-  });
-  return `deleted api key with team id ${teamID}`;
+async function delete_api_Keys_by_teamID(teamID, transaction) {
+  try {
+    await api_key.destroy({
+      where: {
+        team_id: teamID,
+      },
+      transaction: transaction,
+    });
+    return `deleted api key with team id ${teamID}`;
+  } catch (error) {
+    return `could not delete api key with team id ${teamID}`;
+  }
 }
 
 async function delete_members() {
@@ -45,13 +50,18 @@ async function delete_members_by_ID(ID) {
   return `deleted member with id ${ID}`;
 }
 
-async function delete_members_by_teamID(teamID) {
-  await member.destroy({
-    where: {
-      team_id: teamID,
-    },
-  });
-  return `deleted members with team id ${teamID}`;
+async function delete_members_by_teamID(teamID, transaction) {
+  try {
+    await member.destroy({
+      where: {
+        team_id: teamID,
+      },
+      transaction: transaction,
+    });
+    return `deleted members with team id ${teamID}`;
+  } catch (error) {
+    return `could not delete members with team id ${teamID}`;
+  }
 }
 
 async function delete_questions() {
@@ -82,29 +92,34 @@ async function delete_quizzes_by_ID(ID) {
   return `deleted quiz with id ${ID}`;
 }
 
-async function delete_quizzes_by_teamID(teamID) {
-  await quiz.destroy({
-    where: {
-      team_id: teamID,
-    },
-  });
-  return `deleted quiz with team id ${teamID}`;
+async function delete_quizzes_by_teamID(teamID, transaction) {
+  try {
+    await quiz.destroy({
+      where: {
+        team_id: teamID,
+      },
+      transaction: transaction,
+    });
+    return `deleted quiz with team id ${teamID}`;
+  } catch (error) {
+    return `could not delete quiz with team id ${teamID}`;
+  }
 }
 
 /**
  * grouped operations
  */
 
-async function delete_team_by_teamID(teamID) {
+async function delete_team_by_teamID(teamID, res) {
   try {
     await sequelize.transaction(async (transaction) => {
-      await delete_members_by_teamID(teamID);
-      await delete_quizzes_by_teamID(teamID);
-      await delete_api_Keys_by_teamID(teamID);
+      await delete_members_by_teamID(teamID, transaction);
+      await delete_quizzes_by_teamID(teamID, transaction);
+      await delete_api_Keys_by_teamID(teamID, transaction);
     });
-    return `deleted team with team id: ${teamID}`;
+    res.send(`deleted team with team id: ${teamID}`);
   } catch (err) {
-    return `could not delete team with team id: ${teamID}`;
+    res.send(`could not delete team with team id: ${teamID}`);
   }
 }
 

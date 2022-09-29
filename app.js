@@ -83,8 +83,7 @@ app.get('/select/questions', async (req, res) => {
  */
 
 app.post('/create/team', async (req, res) => {
-  let data = await create_Members(req.body.names);
-  res.send(data);
+  let data = await create_Members(req.body.names, res);
 });
 
 /**
@@ -97,9 +96,7 @@ app.delete('/delete/member/ID', async (req, res) => {
 });
 
 app.delete('/delete/team', async (req, res) => {
-  let data = await delete_team_by_teamID(req.body.teamID);
-  console.log(data);
-  res.send(data);
+  let data = await delete_team_by_teamID(req.body.teamID, res);
 });
 
 app.delete('/reset', async (req, res) => {
