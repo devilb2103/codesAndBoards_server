@@ -31,7 +31,7 @@ async function update_answers(teamID, answerList) {
     const keyObj = await select_api_keys_by_teamID(teamID);
     return keyObj;
   } else {
-    return 'Quiz failed :)';
+    return 0;
   }
 }
 
