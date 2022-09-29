@@ -87,7 +87,7 @@ app.post('/create/team', async (req, res) => {
 });
 
 /**
- * delte routes
+ * delete routes
  */
 
 app.delete('/delete/member/ID', async (req, res) => {
