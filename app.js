@@ -15,14 +15,11 @@ const {
   select_quizzes_by_teamID,
   select_api_keys_by_teamID,
 } = require('./Database/selectFunctions');
+const { create_Members } = require('./Database/createFunctions');
 const {
-  create_Members,
-  create_SampleQuestions,
-} = require('./Database/createFunctions');
-const {
-  delete_members,
   delete_All,
-  resetDB,
+  delete_team_by_teamID,
+  delete_members_by_ID,
 } = require('./Database/deleteFunctions');
 const { update_answers } = require('./Database/patchFunctions');
 
@@ -86,27 +83,38 @@ app.get('/select/questions', async (req, res) => {
  */
 
 app.post('/create/team', async (req, res) => {
-  const x = await create_Members(req.body.names);
-  res.send(x);
+  let data = await create_Members(req.body.names);
+  res.send(data);
 });
 
 /**
  * delte routes
  */
 
-app.get('/reset', async (req, res) => {
-  await delete_All();
-  res.send('all tables have been reset');
+app.delete('/delete/member/ID', async (req, res) => {
+  let data = await delete_members_by_ID(req.body.ID);
+  res.send(data);
+});
+
+app.delete('/delete/team', async (req, res) => {
+  let data = await delete_team_by_teamID(req.body.teamID);
+  console.log(data);
+  res.send(data);
+});
+
+app.delete('/reset', async (req, res) => {
+  let data = await delete_All();
+  res.send(data);
 });
 
 /**
- * other routes
+ * patch routes
  */
 app.patch('/submitQuiz', async (req, res) => {
   const teamID = req.body.teamID;
   const answerList = req.body.answerKey;
-  const response = await update_answers(teamID, answerList);
-  res.send(response);
+  let data = await update_answers(teamID, answerList);
+  res.send(data);
 });
 
 app.use((err, req, res, next) => {
