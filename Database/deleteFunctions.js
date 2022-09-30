@@ -117,7 +117,7 @@ async function delete_team_by_teamID(teamID, res) {
       await delete_quizzes_by_teamID(teamID, transaction);
       await delete_api_Keys_by_teamID(teamID, transaction);
     });
-    res.send(`deleted team with team id: ${teamID}`);
+    res.status(200).send(`deleted team with team id: ${teamID}`);
   } catch (err) {
     res.send(`could not delete team with team id: ${teamID}`);
   }

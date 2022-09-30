@@ -61,7 +61,7 @@ async function create_Members(users, res) {
       // create key
       await create_api_Key(teamId);
 
-      res.send(`created members ${users}`);
+      res.status(200).send(`created members ${users}`);
     });
   } catch (err) {
     res.send(`could not create members ${users}`);
