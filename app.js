@@ -15,11 +15,16 @@ const {
   select_quizzes_by_teamID,
   select_api_keys_by_teamID,
 } = require('./Database/selectFunctions');
-const { create_Members } = require('./Database/createFunctions');
+const {
+  create_Members,
+  create_SampleQuestions,
+} = require('./Database/createFunctions');
 const {
   delete_All,
   delete_team_by_teamID,
   delete_members_by_ID,
+  delete_questions,
+  delete_questions_by_ID,
 } = require('./Database/deleteFunctions');
 const { update_answers } = require('./Database/patchFunctions');
 
@@ -63,12 +68,12 @@ app.get('/select/quizzes/teamID/:id', async (req, res) => {
   res.send(data);
 });
 
-app.get('/select/api_Keys', async (req, res) => {
+app.get('/select/api_keys', async (req, res) => {
   let data = await select_api_keys();
   res.send(data);
 });
 
-app.get('/select/api_Keys/teamID/:id', async (req, res) => {
+app.get('/select/api_keys/teamID/:id', async (req, res) => {
   let data = await select_api_keys_by_teamID(req.params.id);
   res.send(data);
 });
@@ -86,17 +91,33 @@ app.post('/create/team', async (req, res) => {
   let data = await create_Members(req.body.names, res);
 });
 
+app.post('/create/sampleQuestions', async (req, res) => {
+  let data = await create_SampleQuestions(req.body.count);
+  res.status(400).send(data);
+});
+
 /**
  * delete routes
  */
 
-app.delete('/delete/member/ID', async (req, res) => {
+app.delete('/delete/members/ID', async (req, res) => {
   let data = await delete_members_by_ID(req.body.ID);
   res.send(data);
 });
 
 app.delete('/delete/team', async (req, res) => {
   let data = await delete_team_by_teamID(req.body.teamID, res);
+  res.send(data);
+});
+
+app.delete('/delete/questions', async (req, res) => {
+  let data = await delete_questions();
+  res.send(data);
+});
+
+app.delete('/delete/questions/ID', async (req, res) => {
+  let data = await delete_questions_by_ID(req.body.ID);
+  res.send(data);
 });
 
 app.delete('/reset', async (req, res) => {
@@ -109,9 +130,8 @@ app.delete('/reset', async (req, res) => {
  */
 app.patch('/submitQuiz', async (req, res) => {
   const teamID = req.body.teamID;
-  const answerList = req.body.answerKey;
-  let data = await update_answers(teamID, answerList);
-  res.send(data);
+  const answerList = req.body.answerList;
+  let data = await update_answers(teamID, answerList, res);
 });
 
 app.use((err, req, res, next) => {
