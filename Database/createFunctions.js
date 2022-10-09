@@ -38,12 +38,12 @@ async function create_Members(users, res) {
         res.send(`invalid names`);
       } else {
         const latestMemberEntry = await member.count();
-        let latestTeamEntry = await member.max('team_id');
-        let id1 = parseInt(latestTeamEntry) + 1;
         let teamId = 0;
         if (!latestMemberEntry) {
           teamId = 1;
         } else {
+          let latestTeamEntry = await member.max('team_id');
+          let id1 = parseInt(latestTeamEntry) + 1;
           teamId = id1;
         }
 
