@@ -1,6 +1,5 @@
 const { select_questions } = require('../Database/selectFunctions');
 const { question } = require('../Models/question');
-var validator = require('validator');
 
 async function generateQuestions(count) {
   let indexes = [];
