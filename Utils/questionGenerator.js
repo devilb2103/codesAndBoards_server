@@ -28,7 +28,20 @@ async function generateQuestions(count) {
 function getRand(n) {
   return Math.floor(Math.random() * n);
 }
+
+function validateNameList(names) {
+  if (names.length <= 4 && names.length >= 2) {
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i];
+      if (name.length < 3) {
+        return false;
+      }
+    }
+    return true;
+  } else return false;
+}
 module.exports = {
   generateQuestions: generateQuestions,
   getRand: getRand,
+  validateNameList: validateNameList,
 };

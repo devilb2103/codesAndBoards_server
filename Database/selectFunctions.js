@@ -50,7 +50,7 @@ async function select_questions() {
       'option_b',
       'option_c',
       'option_d',
-      'isCorrect',
+      'correct_option',
     ],
   });
   return JSON.stringify(res);

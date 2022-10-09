@@ -130,8 +130,9 @@ app.delete('/reset', async (req, res) => {
  */
 app.patch('/submitQuiz', async (req, res) => {
   const teamID = req.body.teamID;
-  const answerList = req.body.answerList;
-  let data = await update_answers(teamID, answerList, res);
+  // const answerList = req.body.answerList;
+  const passed = req.body.passed;
+  let data = await update_answers(teamID, passed, res);
 });
 
 app.use((err, req, res, next) => {

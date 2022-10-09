@@ -2,7 +2,11 @@ const { api_key } = require('../Models/api_key');
 const { member } = require('../Models/member');
 const { question } = require('../Models/question');
 const { quiz } = require('../Models/quiz');
-const { generateQuestions, getRand } = require('../Utils/questionGenerator');
+const {
+  generateQuestions,
+  getRand,
+  validateNameList,
+} = require('../Utils/questionGenerator');
 const { sequelize } = require('./setup');
 
 const apiKeys = ['XNHQPD3M', 'TF5DJ4B8', '3ALR263E', 'PZEEZ9S7', 'YV65UQLM'];
@@ -12,17 +16,17 @@ async function create_SampleQuestions(count) {
   try {
     for (let i = 0; i < count; i++) {
       let q = await question.create({
-        description: `question ${rowCount + i + 1}`,
+        description: `question description`,
         option_a: 'option_a',
         option_b: 'option_b',
         option_c: 'option_c',
         option_d: 'option_d',
-        correct_option: getRand(3) + 1,
+        correct_option: getRand(4) + 1,
       });
     }
     return `${count} questions created`;
   } catch (err) {
-    return `could not create ${count} questions`;
+    return `could not create ${count} questions, ${err}`;
   }
 }
 
@@ -30,30 +34,40 @@ async function create_Members(users, res) {
   try {
     sequelize.transaction(async (transaction) => {
       // fetch member init data
-      let latestTeamEntry = await member.max('team_id');
-      let teamId = parseInt(latestTeamEntry) + 1;
+      if (!validateNameList(users)) {
+        res.send(`invalid names`);
+      } else {
+        const latestMemberEntry = await member.count();
+        let latestTeamEntry = await member.max('team_id');
+        let id1 = parseInt(latestTeamEntry) + 1;
+        let teamId = 0;
+        if (!latestMemberEntry) {
+          teamId = 1;
+        } else {
+          teamId = id1;
+        }
 
-      // create members
-      for (let i = 0; i < users.length; i++) {
-        const name = users[i];
-        const memberObj = await member.create(
-          {
-            name: name,
-            team_id: teamId,
-          },
-          {
-            transaction: transaction,
-          }
-        );
+        // create members
+        for (let i = 0; i < users.length; i++) {
+          const name = users[i];
+          const memberObj = await member.create(
+            {
+              name: name,
+              team_id: teamId,
+            },
+            {
+              transaction: transaction,
+            }
+          );
+        }
+        // create quiz
+        await create_Quiz(teamId, questionCount);
+
+        // create key
+        await create_api_Key(teamId);
+
+        res.status(200).send(`created members ${users}`);
       }
-
-      // create quiz
-      await create_Quiz(teamId, questionCount);
-
-      // create key
-      await create_api_Key(teamId);
-
-      res.status(200).send(`created members ${users}`);
     });
   } catch (err) {
     res.send(`could not create members ${users}`);
