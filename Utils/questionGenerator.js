@@ -33,25 +33,25 @@ const countOccurrences = (arr, val) =>
   arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
 
 function validateNameList(names) {
-  if (names.length <= 4 && names.length >= 2) {
+  if (names.length < 5 && names.length > 1) {
     for (let i = 0; i < names.length; i++) {
       const name = String(names[i]).trim();
-      if (name.length < 3 && name.length > 30) {
-        return (
+      if (name.length < 3 || name.length > 30) {
+        return [
           false,
-          'name is too short (less than 2 letters) or too long (more than 30 letters)'
-        );
+          'name is too short (less than 2 letters) or too long (more than 30 letters)',
+        ];
       } else if (!/^[a-zA-Z]+$/.test(name)) {
-        return (
+        return [
           false,
-          'only letters allowed (try using camel casing (nameSurname) instead of spaces)'
-        );
+          'only letters allowed (try using camel casing (nameSurname) instead of spaces)',
+        ];
       } else if (countOccurrences(names, name) > 1) {
-        return false, 'cannot repeat names';
+        return [false, 'cannot repeat names'];
       }
     }
-    return true;
-  } else return false, 'too many or too less members';
+    return [true, 'team members created'];
+  } else return [false, 'too many or too less members'];
 }
 module.exports = {
   generateQuestions: generateQuestions,

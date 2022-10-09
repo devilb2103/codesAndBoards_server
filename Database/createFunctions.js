@@ -12,7 +12,7 @@ const { sequelize } = require('./setup');
 const apiKeys = ['XNHQPD3M', 'TF5DJ4B8', '3ALR263E', 'PZEEZ9S7', 'YV65UQLM'];
 const questionCount = 6;
 
-async function create_SampleQuestions(count) {
+async function create_SampleQuestions(count, res) {
   try {
     for (let i = 0; i < count; i++) {
       let q = await question.create({
@@ -24,9 +24,15 @@ async function create_SampleQuestions(count) {
         correct_option: getRand(4) + 1,
       });
     }
-    return `${count} questions created`;
+    res.status(200).send({
+      status: true,
+      message: `${count} questions created`,
+    });
   } catch (err) {
-    return `could not create ${count} questions, ${err}`;
+    res.status(400).send({
+      status: false,
+      message: `could not create ${count} questions, ${err}`,
+    });
   }
 }
 
