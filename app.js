@@ -27,6 +27,7 @@ const {
   delete_questions_by_ID,
 } = require('./Database/deleteFunctions');
 const { update_answers } = require('./Database/patchFunctions');
+const { validateNameList } = require('./Utils/questionGenerator');
 
 dotenv.config();
 
@@ -86,6 +87,10 @@ app.get('/select/questions', async (req, res) => {
 /**
  * create routes
  */
+
+app.post('/validateUsers', async (req, res) => {
+  res.send(validateNameList(req.body.names, res));
+});
 
 app.post('/create/team', async (req, res) => {
   let data = await create_Members(req.body.names, res);

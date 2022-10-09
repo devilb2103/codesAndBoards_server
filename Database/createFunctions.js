@@ -34,8 +34,13 @@ async function create_Members(users, res) {
   try {
     sequelize.transaction(async (transaction) => {
       // fetch member init data
-      if (!validateNameList(users)) {
-        res.send(`invalid names`);
+      let x = validateNameList(users);
+      if (!x[0]) {
+        res.status(400).send({
+          status: false,
+          message: x[1],
+        });
+        return;
       } else {
         const latestMemberEntry = await member.count();
         let teamId = 0;
@@ -65,12 +70,17 @@ async function create_Members(users, res) {
 
         // create key
         await create_api_Key(teamId);
-
-        res.status(200).send(`created members ${users}`);
+        res.status(200).send({
+          status: true,
+          message: `created members ${users}`,
+        });
       }
     });
   } catch (err) {
-    res.send(`could not create members ${users}`);
+    res.status(400).send({
+      status: false,
+      message: `could not create members ${users}`,
+    });
   }
 }
 
