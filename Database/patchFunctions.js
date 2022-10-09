@@ -35,9 +35,17 @@ async function update_answers(teamID, answerList, res) {
 
     if (passed) {
       const keyObj = await select_api_keys_by_teamID(teamID);
-      res.status(200).send(keyObj);
+      console.log(keyObj);
+      res.status(200).send({
+        status: true,
+        message: `quiz submitted sucessfully`,
+        api_key: keyObj[0].key,
+      });
     } else {
-      res.status(200).send('Disqualified');
+      res.status(400).send({
+        status: false,
+        message: `invalid response`,
+      });
     }
   }
 }

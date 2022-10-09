@@ -10,16 +10,14 @@ const questionCount = 6;
 
 async function create_SampleQuestions(count) {
   try {
-    const rowCount = await question.count();
     for (let i = 0; i < count; i++) {
       let q = await question.create({
-        id: rowCount + i + 1,
         description: `question ${rowCount + i + 1}`,
         option_a: 'option_a',
         option_b: 'option_b',
         option_c: 'option_c',
         option_d: 'option_d',
-        isCorrect: 'some Boolean',
+        correct_option: getRand(3) + 1,
       });
     }
     return `${count} questions created`;
@@ -32,20 +30,14 @@ async function create_Members(users, res) {
   try {
     sequelize.transaction(async (transaction) => {
       // fetch member init data
-      // const latestMemberEntry = await member.count();
       let latestTeamEntry = await member.max('team_id');
       let teamId = parseInt(latestTeamEntry) + 1;
-      if (!latestMemberEntry) {
-        teamId = 1;
-      }
 
       // create members
       for (let i = 0; i < users.length; i++) {
-        const userId = latestMemberEntry + i + 1;
         const name = users[i];
         const memberObj = await member.create(
           {
-            // id: userId,
             name: name,
             team_id: teamId,
           },
@@ -70,11 +62,8 @@ async function create_Members(users, res) {
 
 async function create_Quiz(teamId, questionCount, transaction) {
   let questions = await generateQuestions(questionCount);
-  const latestEntry = await quiz.count();
-  let quizId = latestEntry + 1;
   const quizObj = await quiz.create(
     {
-      id: quizId,
       team_id: teamId,
       question: questions,
     },
@@ -86,10 +75,8 @@ async function create_Quiz(teamId, questionCount, transaction) {
 
 async function create_api_Key(teamId, transaction) {
   let key = apiKeys[getRand(apiKeys.length)];
-  const latestEntry = await api_key.count();
   const keyObj = await api_key.create(
     {
-      id: latestEntry,
       key: key,
       team_id: teamId,
     },

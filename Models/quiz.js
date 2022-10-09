@@ -5,6 +5,7 @@ const quiz = sequelize.define('quiz', {
   id: {
     primaryKey: true,
     type: DataTypes.INTEGER,
+    autoIncrement: true,
   },
   team_id: {
     type: DataTypes.INTEGER,

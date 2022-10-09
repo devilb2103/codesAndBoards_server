@@ -5,6 +5,7 @@ const question = sequelize.define('question', {
   id: {
     primaryKey: true,
     type: DataTypes.INTEGER,
+    autoIncrement: true,
   },
   description: {
     type: DataTypes.STRING,
@@ -21,8 +22,8 @@ const question = sequelize.define('question', {
   option_d: {
     type: DataTypes.STRING,
   },
-  isCorrect: {
-    type: DataTypes.STRING,
+  correct_option: {
+    type: DataTypes.INTEGER,
   },
 });
 

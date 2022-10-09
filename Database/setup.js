@@ -1,13 +1,18 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize({
-  database: 'dcvhq3hf5it845',
-  username: 'hiiqzdsghjlqrv',
-  password: '99ff7c358407579628cb77f9133ef12bcf57d64081ab0f90cc29b732c1b62f04',
-  host: 'ec2-23-21-207-93.compute-1.amazonaws.com',
+  database: 'dcs1cuvsr3tjud',
+  username: 'fjcyaytwfsxbgh',
+  password: '3c8ce7c35ee79d5485a4e57c87f779c586ed5b7571c079d5e683d1235dfd8633',
+  host: 'ec2-107-23-76-12.compute-1.amazonaws.com',
+  logging: false,
+  operatorsAliases: '0',
   port: 5432,
   pool: {
-    max: 2,
+    max: 100,
+    min: 0,
+    acquire: 100000,
+    idle: 20000000000,
   },
   dialect: 'postgres',
   dialectOptions: {

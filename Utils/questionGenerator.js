@@ -3,7 +3,8 @@ const { question } = require('../Models/question');
 
 async function generateQuestions(count) {
   let indexes = [];
-  sourceLimit = await question.count();
+  sourceLimit = await question.count(); //gets number of questions from db
+  //generates array of integers denoting to-be picked quiestons from db
   for (let i = 0; i < count; i++) {
     const id = getRand(sourceLimit);
     if (indexes.includes(id)) {
@@ -12,6 +13,9 @@ async function generateQuestions(count) {
       indexes.push(id);
     }
   }
+
+  //
+  // generates and returns a list of question objects
   const src = await select_questions();
   const parsedSrc = JSON.parse(src); //list of obj {}
   let selectedQuestions = [];

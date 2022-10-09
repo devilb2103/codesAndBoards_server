@@ -15,7 +15,7 @@ async function select_api_keys_by_teamID(teamID) {
     attributes: ['id', 'key', 'team_id'],
     where: { team_id: teamID },
   });
-  return JSON.stringify(res);
+  return res;
 }
 
 async function select_members() {

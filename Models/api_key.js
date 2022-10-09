@@ -5,6 +5,7 @@ const api_key = sequelize.define('api_Key', {
   id: {
     primaryKey: true,
     type: DataTypes.INTEGER,
+    autoIncrement: true,
   },
   key: {
     type: DataTypes.STRING,
