@@ -32,7 +32,7 @@ async function create_Members(users, res) {
   try {
     sequelize.transaction(async (transaction) => {
       // fetch member init data
-      const latestMemberEntry = await member.count();
+      // const latestMemberEntry = await member.count();
       let latestTeamEntry = await member.max('team_id');
       let teamId = parseInt(latestTeamEntry) + 1;
       if (!latestMemberEntry) {
@@ -45,7 +45,7 @@ async function create_Members(users, res) {
         const name = users[i];
         const memberObj = await member.create(
           {
-            id: userId,
+            // id: userId,
             name: name,
             team_id: teamId,
           },
