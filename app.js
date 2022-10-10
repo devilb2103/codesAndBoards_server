@@ -61,12 +61,12 @@ app.get('/select/members/teamID/:id', async (req, res) => {
 
 app.get('/select/quizzes', async (req, res) => {
   let data = await select_quizzes();
-  res.send(data);
+  res.send(JSON.parse(data));
 });
 
 app.get('/select/quizzes/teamID/:id', async (req, res) => {
   let data = await select_quizzes_by_teamID(req.params.id);
-  res.send(data);
+  res.send(JSON.parse(data));
 });
 
 app.get('/select/api_keys', async (req, res) => {
