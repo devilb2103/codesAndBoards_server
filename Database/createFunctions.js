@@ -450,7 +450,7 @@ async function create_Members(users, res) {
         await create_Quiz(teamId, questionCount);
 
         // create key
-        await create_api_Key(teamId);
+        // await create_api_Key(teamId);
         res.status(200).send({
           status: true,
           message: `created members ${users}`,
