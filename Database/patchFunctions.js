@@ -38,7 +38,7 @@ async function update_answers(teamID, passed, res) {
     res.status(200).send({
       status: true,
       message: 'quiz submitted sucessfully',
-      api_key: keyObj[0].key,
+      // api_key: keyObj[0].key,
     });
   } else {
     res.status(400).send({

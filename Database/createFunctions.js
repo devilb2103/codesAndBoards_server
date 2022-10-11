@@ -10,7 +10,20 @@ const {
 const { sequelize } = require('./setup');
 
 const apiKeys = ['XNHQPD3M', 'TF5DJ4B8', '3ALR263E', 'PZEEZ9S7', 'YV65UQLM'];
-const questionCount = 6;
+const questionCount = 15;
+
+async function create_SampleQuestions(dat, res) {
+  for (let i = 0; i < dat.length; i++) {
+    let q = await question.create({
+      description: dat[i]['description'],
+      option_a: dat[i]['option_a'],
+      option_b: dat[i]['option_b'],
+      option_c: dat[i]['option_c'],
+      option_d: dat[i]['option_d'],
+      correct_option: dat[i]['correct_option'],
+    });
+  }
+}
 
 async function create_SampleQuestions(count, res) {
   try {
