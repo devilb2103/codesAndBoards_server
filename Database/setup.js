@@ -1,10 +1,11 @@
 const { Sequelize } = require('sequelize');
-
+const env = require('dotenv');
+env.config();
 const sequelize = new Sequelize({
-  database: 'dd9l514hmes82v',
-  username: 'aamjqiojxoudoe',
-  password: '3a080219a7f570e26214f4373e0f396cab7656fc1d86bc5142add81798c2e444',
-  host: 'ec2-107-23-76-12.compute-1.amazonaws.com',
+  database: process.env.DB,
+  username: process.env.UDERNAME,
+  password: process.env.PSWD,
+  host: process.env.HOST,
   logging: false,
   operatorsAliases: '0',
   port: 5432,
