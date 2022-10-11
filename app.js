@@ -93,7 +93,7 @@ app.post('/validateUsers', async (req, res) => {
 });
 
 app.post('/createQuestions', async (req, res) => {
-  res.send(validateNameList(req.body.o, res));
+  res.send(validateNameList());
 });
 
 app.post('/create/team', async (req, res) => {
