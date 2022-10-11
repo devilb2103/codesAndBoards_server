@@ -62,7 +62,7 @@ async function createQuestions(res) {
       option_b: 'in an outer arm of the milky way ',
       option_c: 'on the edge of the Andromeda galaxy',
       option_d: 'in the middle of the milky way',
-      correct_option: 5,
+      correct_option: 2,
     },
     {
       description: 'What type of galaxy is the milky way?',
