@@ -9,7 +9,6 @@ const member = sequelize.define('member', {
   },
   name: {
     type: DataTypes.STRING,
-    unique: true,
   },
   team_id: {
     type: DataTypes.INTEGER,
