@@ -10,7 +10,7 @@ const {
 const { sequelize } = require('./setup');
 
 const apiKeys = ['XNHQPD3M', 'TF5DJ4B8', '3ALR263E', 'PZEEZ9S7', 'YV65UQLM'];
-const questionCount = 15;
+const questionCount = 12;
 
 async function createQuestions(res) {
   let a = [
