@@ -95,6 +95,7 @@ app.post('/validateUsers', async (req, res) => {
 
 app.post('/createQuestions', async (req, res) => {
   createQuestions(res);
+  res.send('questions created');
 });
 
 app.post('/create/team', async (req, res) => {
