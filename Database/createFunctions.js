@@ -12,7 +12,7 @@ const { sequelize } = require('./setup');
 const apiKeys = ['XNHQPD3M', 'TF5DJ4B8', '3ALR263E', 'PZEEZ9S7', 'YV65UQLM'];
 const questionCount = 15;
 
-async function create_SampleQuestions() {
+async function createQuestions(res) {
   let a = [
     {
       description: 'The _____ is all there was and all there ever will be.',
@@ -20,7 +20,7 @@ async function create_SampleQuestions() {
       option_b: 'universe',
       option_c: 'Milky way',
       option_d: 'Cosmos',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description:
@@ -29,7 +29,7 @@ async function create_SampleQuestions() {
       option_b: 'Kulper belt',
       option_c: 'Gamow cloud',
       option_d: 'Perseus arm',
-      correct_option: 'a',
+      correct_option: 1,
     },
     {
       description: 'what is the hottest a star can get?',
@@ -37,7 +37,7 @@ async function create_SampleQuestions() {
       option_b: '15,000 degrees celsius',
       option_c: '30 degrees celsius',
       option_d: '0 degree celsius',
-      correct_option: 'a',
+      correct_option: 1,
     },
     {
       description: '____ was the 1st person to look through telescope',
@@ -45,7 +45,7 @@ async function create_SampleQuestions() {
       option_b: 'isaac newton',
       option_c: 'Galileo',
       option_d: 'spongebob square pants',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description:
@@ -54,7 +54,7 @@ async function create_SampleQuestions() {
       option_b: '3,00,000',
       option_c: '2',
       option_d: '14',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description: 'Where is our solar system located?',
@@ -62,7 +62,7 @@ async function create_SampleQuestions() {
       option_b: 'in an outer arm of the milky way ',
       option_c: 'on the edge of the Andromeda galaxy',
       option_d: 'in the middle of the milky way',
-      correct_option: 'b',
+      correct_option: 5,
     },
     {
       description: 'What type of galaxy is the milky way?',
@@ -70,7 +70,7 @@ async function create_SampleQuestions() {
       option_b: 'triangular',
       option_c: 'spiral',
       option_d: 'irregular',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description: 'Where is the "Warm Breeze"?',
@@ -78,7 +78,7 @@ async function create_SampleQuestions() {
       option_b: 'On Mars and Venus',
       option_c: 'in the tropics',
       option_d: 'on the coast of Australia',
-      correct_option: 'a',
+      correct_option: 1,
     },
     {
       description: 'Where is the sculpture "Fallen astronaut" located?',
@@ -86,7 +86,7 @@ async function create_SampleQuestions() {
       option_b: 'in the baikonur spaceport',
       option_c: 'on the cape Canaveral',
       option_d: 'on the moon',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description: 'which is the brightest star in the universe?',
@@ -94,7 +94,7 @@ async function create_SampleQuestions() {
       option_b: 'Vega',
       option_c: 'Rigel',
       option_d: 'Betelgeuse',
-      correct_option: 'a',
+      correct_option: 1,
     },
     {
       description:
@@ -103,7 +103,7 @@ async function create_SampleQuestions() {
       option_b: 'Magnetars',
       option_c: 'Pulsars',
       option_d: 'cephid',
-      correct_option: 'a',
+      correct_option: 1,
     },
     {
       description:
@@ -112,7 +112,7 @@ async function create_SampleQuestions() {
       option_b: 'Canopus',
       option_c: 'Vega',
       option_d: 'Procyon',
-      correct_option: 'b',
+      correct_option: 2,
     },
     {
       description: 'Which rover was the first to explore Mars?',
@@ -120,7 +120,7 @@ async function create_SampleQuestions() {
       option_b: 'Opportunity',
       option_c: 'Sojourner',
       option_d: 'Spirit',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description:
@@ -129,7 +129,7 @@ async function create_SampleQuestions() {
       option_b: 'oxygen',
       option_c: 'iron',
       option_d: 'silicon',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description: 'What does the colour of star indicates?',
@@ -137,7 +137,7 @@ async function create_SampleQuestions() {
       option_b: 'Lighting or glow',
       option_c: 'Distance from the earth',
       option_d: 'Temperature',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description:
@@ -146,7 +146,7 @@ async function create_SampleQuestions() {
       option_b: 'Earth',
       option_c: 'Jupiter',
       option_d: 'Mercury',
-      correct_option: 'B',
+      correct_option: 2,
     },
     {
       description: 'Pythagoras described cosmos as the',
@@ -154,7 +154,7 @@ async function create_SampleQuestions() {
       option_b: 'Evolution Theory',
       option_c: 'Big Bang Theory',
       option_d: 'Order of the Universe',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description: 'All of space and time and its contents is the',
@@ -162,7 +162,7 @@ async function create_SampleQuestions() {
       option_b: 'Universe',
       option_c: 'Black Hole',
       option_d: 'Big Bang',
-      correct_option: 'b',
+      correct_option: 2,
     },
     {
       description: 'The study of the cosmos is referred to as',
@@ -170,7 +170,7 @@ async function create_SampleQuestions() {
       option_b: 'Theology',
       option_c: 'Universe',
       option_d: 'Cosmology',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description: 'The cosmos has been described as the',
@@ -178,7 +178,7 @@ async function create_SampleQuestions() {
       option_b: 'Entire universe',
       option_c: 'Observable universe',
       option_d: 'Heavenly bodies',
-      correct_option: 'b',
+      correct_option: 2,
     },
     {
       description:
@@ -187,7 +187,7 @@ async function create_SampleQuestions() {
       option_b: 'Astronomy',
       option_c: 'The Big Bang Theory',
       option_d: 'Theological Astronomy',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description:
@@ -196,7 +196,7 @@ async function create_SampleQuestions() {
       option_b: 'Venus',
       option_c: 'Saturn',
       option_d: 'Neptune',
-      correct_option: 'b',
+      correct_option: 2,
     },
     {
       description:
@@ -205,7 +205,7 @@ async function create_SampleQuestions() {
       option_b: 'Jython',
       option_c: 'IronPython',
       option_d: 'Brython',
-      correct_option: 'a',
+      correct_option: 1,
     },
     {
       description:
@@ -214,7 +214,7 @@ async function create_SampleQuestions() {
       option_b: 'English',
       option_c: 'French',
       option_d: 'Spanish',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description: 'Which of the following is not a concept of OOPS',
@@ -222,7 +222,7 @@ async function create_SampleQuestions() {
       option_b: 'Abstraction',
       option_c: 'Compilation',
       option_d: 'Encapsulation ',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description: 'which of the following is output command in cpp?',
@@ -230,7 +230,7 @@ async function create_SampleQuestions() {
       option_b: 'printf()',
       option_c: 'cout>>',
       option_d: 'cout<<',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description: 'What does this equation mean ? a != t',
@@ -238,7 +238,7 @@ async function create_SampleQuestions() {
       option_b: 'A and t are equal',
       option_c: 'A is not equal to t',
       option_d: 'T is add to a',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description: 'Which data structure uses LIFO?',
@@ -246,7 +246,7 @@ async function create_SampleQuestions() {
       option_b: 'Int',
       option_c: 'Stacks',
       option_d: 'Queues',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description: 'HTML stands for HyperText __________ Language.',
@@ -254,7 +254,7 @@ async function create_SampleQuestions() {
       option_b: 'Marker',
       option_c: 'Markup',
       option_d: 'Marking',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description: 'Switch statement accepts _______.',
@@ -262,7 +262,7 @@ async function create_SampleQuestions() {
       option_b: 'Char',
       option_c: 'Long',
       option_d: 'All of the mentioned',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description: 'Which function overloads the >> operator?',
@@ -270,7 +270,7 @@ async function create_SampleQuestions() {
       option_b: 'gt()',
       option_c: 'ge()',
       option_d: 'None of the above',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description:
@@ -279,7 +279,7 @@ async function create_SampleQuestions() {
       option_b: 'Assignment Operator',
       option_c: 'A constructor without any parameter',
       option_d: 'All of the above',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description: 'Which of the following is a true about Binary Trees',
@@ -287,7 +287,7 @@ async function create_SampleQuestions() {
       option_b: 'Every complete binary tree is also a full binary tree.',
       option_c: 'Every full binary tree is also a complete binary tree.',
       option_d: 'None of the above',
-      correct_option: 'D',
+      correct_option: 4,
     },
     {
       description: 'Which one is the first search engine in internet ?',
@@ -295,7 +295,7 @@ async function create_SampleQuestions() {
       option_b: 'Archie',
       option_c: 'Altavista',
       option_d: 'WAIS ',
-      correct_option: 'B',
+      correct_option: 2,
     },
     {
       description:
@@ -304,7 +304,7 @@ async function create_SampleQuestions() {
       option_b: 'C Language',
       option_c: 'Java',
       option_d: 'Basic',
-      correct_option: 'C',
+      correct_option: 3,
     },
     {
       description: 'First Computer Virus is known as ',
@@ -312,7 +312,7 @@ async function create_SampleQuestions() {
       option_b: 'Creeper Virus ',
       option_c: 'Elk Cloner ',
       option_d: 'SCA Virus ',
-      correct_option: 'B',
+      correct_option: 2,
     },
     {
       description:
@@ -321,7 +321,7 @@ async function create_SampleQuestions() {
       option_b: 'JAVA',
       option_c: 'J2EE',
       option_d: 'Prolog ',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description:
@@ -330,7 +330,7 @@ async function create_SampleQuestions() {
       option_b: '3',
       option_c: '7',
       option_d: '11',
-      correct_option: 'c',
+      correct_option: 3,
     },
     {
       description: 'Who Created the C programming language?',
@@ -338,7 +338,7 @@ async function create_SampleQuestions() {
       option_b: 'Dennis Ritchie',
       option_c: 'Robin Milner',
       option_d: 'Frieder Nake',
-      correct_option: 'b',
+      correct_option: 2,
     },
     {
       description: 'Which one is the first word processor application?',
@@ -346,7 +346,7 @@ async function create_SampleQuestions() {
       option_b: 'Apple i Work',
       option_c: 'Sun StarOffice',
       option_d: 'Word Star',
-      correct_option: 'd',
+      correct_option: 4,
     },
     {
       description: 'Who developed the JAVA programming language?',
@@ -354,7 +354,7 @@ async function create_SampleQuestions() {
       option_b: 'Douglas Engelbart',
       option_c: 'Edmund M.Clarke',
       option_d: 'James D.Foley',
-      correct_option: 'a',
+      correct_option: 1,
     },
     {
       description:
@@ -363,7 +363,7 @@ async function create_SampleQuestions() {
       option_b: 'Smoke Testing',
       option_c: 'Stress Testing',
       option_d: 'White Box Testing',
-      correct_option: 'b',
+      correct_option: 2,
     },
     {
       description: 'Which of the types of binary trees is weight-balanced?',
@@ -371,17 +371,18 @@ async function create_SampleQuestions() {
       option_b: 'Red-Black Tree',
       option_c: 'Splay Tree',
       option_d: 'BB[ɑ]',
-      correct_option: 'd',
+      correct_option: 4,
     },
   ];
   for (let i = 0; i < a.length; i++) {
+    console.log(a[i]);
     let q = await question.create({
-      description: dat[i]['description'],
-      option_a: dat[i]['option_a'],
-      option_b: dat[i]['option_b'],
-      option_c: dat[i]['option_c'],
-      option_d: dat[i]['option_d'],
-      correct_option: dat[i]['correct_option'],
+      description: a[i]['description'],
+      option_a: a[i]['option_a'],
+      option_b: a[i]['option_b'],
+      option_c: a[i]['option_c'],
+      option_d: a[i]['option_d'],
+      correct_option: a[i]['correct_option'],
     });
   }
 }
@@ -496,4 +497,5 @@ module.exports = {
   create_Members: create_Members,
   create_Quiz: create_Quiz,
   create_api_Key: create_api_Key,
+  createQuestions: createQuestions,
 };

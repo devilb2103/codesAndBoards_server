@@ -18,6 +18,7 @@ const {
 const {
   create_Members,
   create_SampleQuestions,
+  createQuestions,
 } = require('./Database/createFunctions');
 const {
   delete_All,
@@ -93,7 +94,7 @@ app.post('/validateUsers', async (req, res) => {
 });
 
 app.post('/createQuestions', async (req, res) => {
-  res.send(validateNameList());
+  createQuestions(res);
 });
 
 app.post('/create/team', async (req, res) => {
