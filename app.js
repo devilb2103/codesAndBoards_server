@@ -123,10 +123,10 @@ app.delete('/delete/questions/ID', async (req, res) => {
   res.send(data);
 });
 
-app.delete('/reset', async (req, res) => {
-  let data = await delete_All();
-  res.send(data);
-});
+// app.delete('/reset', async (req, res) => {
+//   let data = await delete_All();
+//   res.send(data);
+// });
 
 /**
  * patch routes
